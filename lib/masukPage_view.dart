@@ -1,6 +1,9 @@
 import 'package:asal_gores/daftarPage_view.dart';
+import 'package:asal_gores/services/auth_services.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import 'akunPage_view.dart';
 
 class MasukPage extends StatefulWidget {
   const MasukPage({key}) : super(key: key);
@@ -10,6 +13,8 @@ class MasukPage extends StatefulWidget {
 }
 
 class _MasukPageState extends State<MasukPage> {
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,17 +32,18 @@ class _MasukPageState extends State<MasukPage> {
                   offset: Offset(0, 3), // changes position of shadow
                 ),
               ]),
-          child: Column(children: [
+          child: ListView(children: [
             Image.asset('assets/images/logo.png'),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TextField(
+                controller: emailController,
                 textInputAction: TextInputAction.go,
                 autofocus: true,
                 decoration: InputDecoration(
                   contentPadding:
                       EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
-                  labelText: 'username',
+                  labelText: 'Email',
                   labelStyle: TextStyle(color: Color(0xff202020)),
                   hintStyle: TextStyle(
                     fontSize: 20.0,
@@ -58,6 +64,7 @@ class _MasukPageState extends State<MasukPage> {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TextField(
+                controller: passwordController,
                 obscureText: true,
                 textInputAction: TextInputAction.go,
                 decoration: InputDecoration(
@@ -88,7 +95,12 @@ class _MasukPageState extends State<MasukPage> {
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xff202020),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await AuthServices.signIn(
+                      emailController.text, passwordController.text);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AkunPage()));
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Text(
@@ -99,34 +111,43 @@ class _MasukPageState extends State<MasukPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(15, 210, 15, 0),
+              margin: const EdgeInsets.fromLTRB(20, 200, 20, 20),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                      onPressed: () {}, icon: Icon(Icons.navigate_before)),
-                  RichText(
-                    text: TextSpan(
-                        text: 'Beranda',
-                        style: TextStyle(color: Color(0xff202020)),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            //do
-                          }),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {}, icon: Icon(Icons.navigate_before)),
+                      RichText(
+                        text: TextSpan(
+                            text: 'Beranda',
+                            style: TextStyle(color: Color(0xff202020)),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                //do
+                              }),
+                      ),
+                    ],
                   ),
-                  Spacer(),
-                  RichText(
-                    text: TextSpan(
-                        text: 'Daftar',
-                        style: TextStyle(color: Color(0xff202020)),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DaftarPage()));
-                          }),
+                  Row(
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                            text: 'Daftar',
+                            style: TextStyle(color: Color(0xff202020)),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DaftarPage()));
+                              }),
+                      ),
+                      IconButton(
+                          onPressed: () {}, icon: Icon(Icons.navigate_next)),
+                    ],
                   ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.navigate_next)),
                 ],
               ),
             ),

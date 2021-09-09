@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:asal_gores/daftarPage_view.dart';
 import 'package:asal_gores/masukPage_view.dart';
 import 'package:asal_gores/postPage_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ class _AkunPageState extends State<AkunPage> {
           ],
         ),
       ),
-      body: _belumLogin(context),
+      body: User != null ? _login(context) : _belumLogin(context),
     );
   }
 }

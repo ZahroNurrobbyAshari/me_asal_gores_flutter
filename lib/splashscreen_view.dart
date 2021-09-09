@@ -1,11 +1,8 @@
 import 'package:asal_gores/bottom_nav.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:loading_indicator/loading_indicator.dart';
-
-// void Coba(){
-//   for()
-// };
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({key}) : super(key: key);
@@ -15,6 +12,7 @@ class SplashScreenPage extends StatefulWidget {
 }
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   void initState() {
     super.initState();
     startSplashScreen();

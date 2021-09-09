@@ -3,10 +3,10 @@ import "package:firebase_auth/firebase_auth.dart";
 class AuthServices {
   static FirebaseAuth _auth = FirebaseAuth.instance;
 
-  static Future<FirebaseUser> signInAnonymous() async {
+  static Future<User> signInAnonymous() async {
     try {
-      AuthResult result = await _auth.signInAnonymously();
-      FirebaseUser firebaseUser = result.user;
+      var result = await _auth.signInAnonymously();
+      User firebaseUser = result.user;
 
       return firebaseUser;
     } catch (e) {
@@ -15,11 +15,11 @@ class AuthServices {
     }
   }
 
-  static Future<FirebaseUser> SignUp(String email, String password) async {
+  static Future<User> signUp(String email, String password) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
+      var result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser firebaseUser = result.user;
+      User firebaseUser = result.user;
       return firebaseUser;
     } catch (e) {
       print(e.toString());
@@ -27,11 +27,11 @@ class AuthServices {
     }
   }
 
-  static Future<FIrebaseUser> signIn(String email, String password) async {
+  static Future<User> signIn(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
+      var result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser user = result.user;
+      User user = result.user;
       return user;
     } catch (e) {
       print(e.toString());
@@ -43,6 +43,5 @@ class AuthServices {
     _auth.signOut();
   }
 
-  static Stream<FirebaseUser> get firebaseUserStream =>
-      _auth.onAuthStateChanged;
+  static Stream<User> get firebaseUserStream => _auth.authStateChanges();
 }

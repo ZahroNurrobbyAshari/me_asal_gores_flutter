@@ -184,12 +184,12 @@ class _HomePageState extends State<HomePage> {
                 color: Color(0xffd6d6d6),
               ),
               backgroundColor: Color(0xff202020),
-              onTap: () async {
-                File file = await pickImage(ImageSource.gallery);
-                contentImagePath =
-                    await DatabaseServices.uploadContentFile(file);
+              onTap: () {
+                // File file = await pickImage(ImageSource.gallery);
+                // contentImagePath =
+                // await DatabaseServices.uploadContentFile(file);
 
-                setState(() {});
+                // setState(() {});
               },
               label: 'Pilih dari Galeri ',
               labelStyle: TextStyle(
